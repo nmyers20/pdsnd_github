@@ -40,18 +40,31 @@ def get_filters():
 
 
 def load_data(city, month, day):
-    """
-    Loads data for the specified city and filters by month and day if applicable.
-
-    Args:
-        (str) city - name of the city to analyze
-        (str) month - name of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
-    Returns:
-        df - Pandas DataFrame containing city data filtered by month and day
-    """
-
-
+  df=pd.read_csv(CITY_DATA[city])
+    df['Start Time'] = pd.to_datetime(df['Start Time'])
+    df['Month'] = df['Start Time'].dt.month
+    map_dict = {1: "january", 2: "february", 3: "march", 4:"april", 5:"may", 6:"june"}
+    df["Month"] = df["Month"].map(map_dict)
+    df['Day'] = pd.to_datetime(df['Start Time']).dt.day_name()
+    map_dict2 = {"Monday": "monday", "Tuesday": "tuesday", "Wednesday": "wednesday", "Thursday":"thursday", "Friday":"friday", "Saturday":"saturday", "Sunday":"sunday"}
+    df["Day"] = df["Day"].map(map_dict2)
+   
+    #filtering by month and day
+    if month != 'all':
+        df= df[df["Month"]==month]
+ 
+ 
+    if day != 'all':
+        df = df[df['Day']==day]
+   
+    #display the most common month 
+    if month == "all":
+        common_month = df['Month'].mode()[0]
+        print("The most common month for bike rental is", common_month)
+   
+    #display the most common day of week
+    if day == "all":
+        print("The most common day of the week for bike rental is", df["Day"].mode()[0])
     return df
 
 
