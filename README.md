@@ -6,7 +6,7 @@
 Bikeshare Date Project
 
 ### Description
-The bikeshare project provides bikeshare data for 3 ciities based on user input.
+The bikeshare project provides bikeshare data for 3 ciities based on user input. The user can choose from Chicago, New York, or Wasington.
 
 ### Files used
 chicago.csv, new_york_city.csv, washington.csv
